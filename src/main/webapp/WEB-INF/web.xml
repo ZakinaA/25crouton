@@ -21,6 +21,19 @@
         <servlet-name>ServletPompier</servlet-name>
         <url-pattern>/ServletPompier/ajouter</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>ServletIntervention</servlet-name>
+        <servlet-class>servlet.ServletIntervention</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletIntervention</servlet-name>
+        <url-pattern>/ServletIntervention/listerInterventions</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>ServletIntervention</servlet-name>
+        <url-pattern>/ServletIntervention/consulterIntervention</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

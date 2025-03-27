@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 
 /**
@@ -9,12 +5,12 @@ package model;
  * @author zakina
  */
 public class Pompier {
-    
+
     private int id;
-    private String bip ;
+    private String bip;
     private String nom;
-    private String prenom ;
-    private Caserne uneCaserne ;
+    private String prenom;
+    private Caserne uneCaserne;
 
     public Pompier() {
     }
@@ -58,7 +54,4 @@ public class Pompier {
     public void setUneCaserne(Caserne uneCaserne) {
         this.uneCaserne = uneCaserne;
     }
-    
-    
-    
 }

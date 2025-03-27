@@ -9,6 +9,14 @@
         <servlet-name>ServletPompier</servlet-name>
         <servlet-class>servlet.ServletPompier</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServletEngin</servlet-name>
+        <servlet-class>servlet.ServletEngin</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletEngin</servlet-name>
+        <url-pattern>/ServletEngin/listerEngins</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ServletPompier</servlet-name>
         <url-pattern>/ServletPompier/lister</url-pattern>

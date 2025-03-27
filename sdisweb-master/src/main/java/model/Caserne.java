@@ -15,6 +15,9 @@ public class Caserne {
     private int id;
     private String nom ;
     private ArrayList<Pompier> lesPompiers ;
+    private ArrayList<Engin> lesEngins; 
+
+    
 
     public Caserne() {
     }
@@ -23,6 +26,13 @@ public class Caserne {
         this.id = id;
     }
 
+     
+    public Caserne(int id, String nom) {
+        this.id = id;
+        this.nom = nom;
+        this.lesPompiers = new ArrayList<>();
+        this.lesEngins = new ArrayList<>();
+    }
     
     public int getId() {
         return id;
@@ -55,4 +65,19 @@ public class Caserne {
         lesPompiers.add(p);
     }
     
+    public ArrayList<Engin> getLesEngins() {
+    return lesEngins;
+}
+
+     public void setLesEngins(ArrayList<Engin> lesEngins) {
+        this.lesEngins = lesEngins;
+    }
+    public void addEngin(Engin e) {
+    if (lesEngins == null) {
+        lesEngins = new ArrayList<>();
+    }
+    lesEngins.add(e);
+    e.setCaserne(this);
+}
+
 }

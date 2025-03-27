@@ -1,0 +1,12 @@
+database\DaoCaserne.class
+servlet\ServletPompier.class
+form\FormPompier.class
+database\ConnexionBdd.class
+model\Pompier.class
+model\Caserne.class
+database\InitConnexion.class
+test\TestDaoPompier.class
+bts\sio\sdisweb\resources\JakartaEE10Resource.class
+test\TestDaoCaserne.class
+database\DaoPompier.class
+bts\sio\sdisweb\JakartaRestConfiguration.class

@@ -14,10 +14,25 @@ public class Caserne {
     
     private int id;
     private String nom ;
+    private String rue ;
+    private String cps ;
+    private String ville ;
     private ArrayList<Pompier> lesPompiers ;
-
-    public Caserne() {
+    
+    
+    public Caserne(){
+    
     }
+
+    public Caserne(int id, String nom, String rue, String cps, String ville, ArrayList<Pompier> lesPompiers) {
+        this.id = id;
+        this.nom = nom;
+        this.rue = rue;
+        this.cps = cps;
+        this.ville = ville;
+        this.lesPompiers = lesPompiers;
+    }
+
 
     public Caserne(int id) {
         this.id = id;
@@ -39,20 +54,29 @@ public class Caserne {
     public void setNom(String nom) {
         this.nom = nom;
     }
-
-    public ArrayList<Pompier> getLesPompiers() {
-        return lesPompiers;
-    }
-
-    public void setLesPompiers(ArrayList<Pompier> lesPompiers) {
-        this.lesPompiers = lesPompiers;
-    }
     
-    public void addPompier(Pompier p){
-        if (lesPompiers == null){
-            lesPompiers = new ArrayList<Pompier>();
-        }
-        lesPompiers.add(p);
+    public String getRue() {
+        return rue;
+    }
+
+    public void setRue(String rue) {
+        this.rue = rue;
+    }
+
+    public String getCps() {
+        return cps;
+    }
+
+    public void setCps(String cps) {
+        this.cps = cps;
+    }
+
+    public String getVille() {
+        return ville;
+    }
+
+    public void setVille(String ville) {
+        this.ville = ville;
     }
     
 }

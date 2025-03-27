@@ -10,3 +10,4 @@ bts\sio\sdisweb\resources\JakartaEE10Resource.class
 test\TestDaoCaserne.class
 database\DaoPompier.class
 bts\sio\sdisweb\JakartaRestConfiguration.class
+servlet\ServletCaserne.class

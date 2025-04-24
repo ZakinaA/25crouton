@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import model.Pompier;
 import model.Caserne;
 import database.DaoPompier;
+import java.util.List;
 
 /**
  *
@@ -90,6 +91,9 @@ public class ServletCaserne extends HttpServlet {
             int idCaserne = Integer.parseInt((String)request.getParameter("idCaserne"));
             System.out.println( "caserne à afficher = " + idCaserne);
             Caserne c= DaoCaserne.getCaserneById(cnx, idCaserne);
+           
+            ArrayList<Pompier> lesPompiers = DaoPompier.getPompiersParCaserne(cnx,idCaserne);
+            request.setAttribute("pLesPompiers", lesPompiers);
             request.setAttribute("cCaserne", c);
             //ArrayList<Pompier> lesPompiers = DaoPompier.getPompiersById(cnx, idCaserne);
             //request.setAttribute("lesPompiers", lesPompiers);

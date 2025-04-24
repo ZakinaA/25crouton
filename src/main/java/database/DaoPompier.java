@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import model.Caserne;
 import model.Pompier;
 
@@ -53,6 +54,35 @@ public class DaoPompier {
         }
         return lesPompiers;
     }
+    
+    public static ArrayList<Pompier> getPompiersParCaserne(Connection cnx,int idCaserne) {
+        ArrayList<Pompier> listePompiers = new ArrayList<Pompier>();
+        try {
+           requeteSql = cnx.prepareStatement(
+                "SELECT * FROM pompier WHERE caserne_id = ?");
+            requeteSql.setInt(1, idCaserne);
+            resultatRequete = requeteSql.executeQuery();
+            
+            System.out.println("reueteeeee"+ requeteSql);
+            while (resultatRequete.next()) {
+                Pompier p = new Pompier();
+                p.setId(resultatRequete.getInt("id"));
+                p.setNom(resultatRequete.getString("nom"));
+                p.setPrenom(resultatRequete.getString("prenom"));
+                p.setBip(resultatRequete.getString("bip"));
+
+                /*Caserne c = new Caserne();
+                c.setId(idCaserne); // on évite une requête en plus
+                p.setUneCaserne(c);*/
+
+                listePompiers.add(p);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listePompiers;
+    }
+
     
     public static Pompier getPompierById(Connection cnx, int idPompier){
         

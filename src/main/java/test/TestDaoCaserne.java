@@ -18,18 +18,8 @@ public class TestDaoCaserne {
       public static void main (String args[]){
         
         Connection cnx = ConnexionBdd.ouvrirConnexion();
-        System.out.println ("nombre de casernes=" + DaoCaserne.getLesCasernes(cnx).size());
-        
-        System.out.println ("Le caserne 1 s'appelle =" + DaoCaserne.getCaserneById(cnx,1).getNom());
-        
-        Caserne c = new Caserne();
-        c.setId(4);
-        c.setNom("CHAUVEL");
-        c.setRue("14 rue");
-        c.setCps("14000");
-        c.setVille("ifs");
-
-        System.out.println("le nouveau pompier a reçu l id = " + c.getId());
+        System.out.println ("Nombre de caserne = " + DaoCaserne.getLesCasernes(cnx).size());
+        System.out.println ("Caserne 1 = " + DaoCaserne.getCaserneById(cnx,1).getNom());
 
       }
 }

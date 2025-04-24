@@ -19,7 +19,7 @@ public class TestDaoPompier {
     public static void main (String args[]){
         
         Connection cnx = ConnexionBdd.ouvrirConnexion();
-        System.out.println ("nombre de pomipiers=" + DaoPompier.getLesPompiers(cnx).size());
+        /*System.out.println ("nombre de pomipiers=" + DaoPompier.getLesPompiers(cnx).size());
         
         System.out.println ("Le pompier 1 s'appelle =" + DaoPompier.getPompierById(cnx,1).getNom());
         
@@ -29,7 +29,10 @@ public class TestDaoPompier {
         p.setUneCaserne(new Caserne(1));
         
         p = DaoPompier.addPompier(cnx, p);
-        System.out.println("le nouveau pompier a reçu l id = " + p.getId());
+        System.out.println("le nouveau pompier a reçu l id = " + p.getId());*/
+        
+        
+        System.out.println(DaoPompier.getPompiersParCaserne(cnx, 1).size());
         
         
     }

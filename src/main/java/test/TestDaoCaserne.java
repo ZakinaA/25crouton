@@ -5,9 +5,10 @@
 package test;
 
 import database.ConnexionBdd;
-import database.DaoCaserne;
-import database.DaoPompier;
+import database.DaoSurgrade;
 import java.sql.Connection;
+import model.Surgrade;
+import model.Grade;
 
 /**
  *
@@ -15,11 +16,6 @@ import java.sql.Connection;
  */
 public class TestDaoCaserne {
     
-      public static void main (String args[]){
-        
-        Connection cnx = ConnexionBdd.ouvrirConnexion();
-        System.out.println ("nombre de casernes=" + DaoCaserne.getLesCasernes(cnx).size());
-           
-    }
+    
     
 }

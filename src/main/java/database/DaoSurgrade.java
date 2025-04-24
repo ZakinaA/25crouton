@@ -108,6 +108,20 @@ public class DaoSurgrade {
 
     return s;
 }
+    
+    public static void updateSurgrade(Connection cnx, Surgrade s){
+        try{
+            requeteSql = cnx.prepareStatement("UPDATE surgrade SET libelle = ? WHERE id = ?");
+            requeteSql.setString(1, s.getLibelle());
+            requeteSql.setInt(2, s.getId());
+            requeteSql.executeUpdate();
+            
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        
+        
+    }
 
     
     

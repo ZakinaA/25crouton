@@ -1,61 +1,55 @@
 <%-- 
-    Document   : lister_pompiers.jsp
-    Created on : 15 mars 2024, 16:50:49
+    Document   : listerGrade.jsp
+    Created on : 15 mars 2024
     Author     : zakina
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="model.Pompier"%>
-<%@page import="model.Caserne"%>
+<%@page import="model.Surgrade"%>
 <%@page import="java.util.ArrayList"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>SDIS WEB</title>
+        <meta charset="UTF-8">
+        <title>Liste des Grades du SDIS</title>
     </head>
     <body>
-        <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>APPLICATION DE GESTION SDIS CALVADOS</title>
-    </head>
-    <body>
-        <h1>Liste des Grades du Sdis</h1>
-            <%
-                ArrayList<Surgrade> LesSurgrade = (ArrayList)request.getAttribute("pLesSurgrade");
-            %>
-            <table>  
+        <h1>Liste des Surgrades</h1>
+
+        <%
+            ArrayList<Surgrade> LesSurgrade = (ArrayList<Surgrade>) request.getAttribute("pLesSurgrade");
+        %>
+
+        <table border="1">
             <thead>
-                <tr>             
-                    <th>id</th>
-                    <th>grade</th>
-                    <th>surgrade</th>
-                               
+                <tr>
+                    <th>ID</th>
+                    <th>Libellé</th>
+                    <th>Grade associé</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
+                <%
+                    for (Surgrade s : LesSurgrade) {
+                %>
                 <tr>
-                    <%
-                        for (Surgrade s : LesSurgrade)
-                        {              
-                            out.println("<tr><td>");
-                            out.println(s.getId());
-                            out.println("</td>");
+                    <td><%= s.getId() %></td>
+                    <td>
+                        <a href="ServletGrade?idGrade=<%= s.getId() %>">
+                            <%= s.getLibelle() %>
+                        </a>
+                    </td>
+                    <td><%= s.getUngrade().getLibelle() %></td>
+                    <td>
+                        <a href="ServletGrade?action=modifier&idGrade=<%= s.getId() %>">Modifier</a>
 
-                            out.println("<td><a href='../ServletGrade/consulter?idGrade=" + s.getId() + "'>" + s.getLibelle() + "</a></td>");
-                            out.println(s.getLibelle());
-                            out.println("</a></td>");
-
-                           
-                            out.println("<td>");
-                            out.println(s.getUngrade().getLibelle());
-                            out.println("</td>");
-                               
-                        }
-                    %>
+                    </td>
                 </tr>
+                <%
+                    }
+                %>
             </tbody>
         </table>
-    </body>
     </body>
 </html>

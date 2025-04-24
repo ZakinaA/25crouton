@@ -33,6 +33,10 @@
         <servlet-name>ServletGrade</servlet-name>
         <url-pattern>/ServletGrade/consulter</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletGrade</servlet-name>
+        <url-pattern>/ServletGrade/modifier</url-pattern>
+        </servlet-mapping>
     <session-config>
         <session-timeout>
             30

@@ -35,7 +35,7 @@
                 <label for="caserne">Caserne : </label>
                 <select name="idPompier">
                     <%
-                        ArrayList<Caserne> lesCasernes= (ArrayList)request.getAttribute("pLesCasernes");
+                        ArrayList<Caserne> lesCasernes= (Arra,yList)request.getAttribute("pLesCasernes");
                         for (int i=0; i<lesCasernes.size();i++){
                             Caserne c = lesCasernes.get(i);
                             out.println("<option value='" + c.getId()+"'>" + c.getNom()+"</option>" );

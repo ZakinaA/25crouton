@@ -12,11 +12,22 @@ public class Intervention {
     private Time heureAppel;
     private Time heureArrivee;
     private int duree;
+    private int situationId;
+
+    public int getSituationId() {
+        return situationId;
+    }
+
+    
+    public void setSituationId(int situationId) {
+        this.situationId = situationId;
+    }
+
     private Situation situation;
     private ArrayList<Pompier> lesPompiers;
 
     public Intervention() {
-        this.lesPompiers = new ArrayList<>(); // Initialisation de la liste
+        this.lesPompiers = new ArrayList<>(); 
     }
 
     public int getId() {

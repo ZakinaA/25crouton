@@ -110,12 +110,48 @@ public class DaoIntervention {
                 pompier.setId(rs.getInt("id"));
                 pompier.setNom(rs.getString("nom"));
                 pompier.setPrenom(rs.getString("prenom"));
-                // ... récupérez les autres attributs du pompier ...
+               
                 lesPompiers.add(pompier);
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // Gérez l'exception de manière appropriée
+            e.printStackTrace(); 
         }
         return lesPompiers;
     }
+    public static Intervention addIntervention(Connection connection, Intervention i) {      
+    int idGenere = -1;  
+    try {
+        
+        String sql = "INSERT INTO intervention (lieu, date, heure_appel, heure_arrivee, duree, situation_id) VALUES (?,?,?,?,?,?)";
+        requeteSql = connection.prepareStatement(sql, requeteSql.RETURN_GENERATED_KEYS);
+        
+        
+        requeteSql.setString(1, i.getLieu());
+        requeteSql.setDate(2, new java.sql.Date(i.getDate().getTime()));
+        requeteSql.setTime(3, i.getHeureAppel());
+        requeteSql.setTime(4, i.getHeureArrivee());
+        requeteSql.setInt(5, i.getDuree());
+        requeteSql.setInt(6, i.getSituation().getId());  
+        
+       
+        requeteSql.executeUpdate();
+        
+       
+        resultatRequete = requeteSql.getGeneratedKeys();
+        if (resultatRequete.next()) {
+            idGenere = resultatRequete.getInt(1);
+            i.setId(idGenere);  
+        }
+
+       
+        i = getInterventionById(connection, i.getId());
+        
+    } catch (SQLException e) {
+        e.printStackTrace();
+        
+    }
+    return i;  
+}
+
+
 }

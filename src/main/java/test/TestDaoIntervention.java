@@ -2,6 +2,7 @@ package test;
 
 import database.ConnexionBdd;
 import database.DaoIntervention;
+import database.DaoPompier;
 import java.sql.Connection;
 import model.Intervention;
 import model.Situation;
@@ -25,6 +26,16 @@ public class TestDaoIntervention {
         } else {
             System.out.println("L'intervention 1 n'a pas été trouvée.");
         }
+        
+       
+        System.out.println ("nombre d'interventions=" + DaoIntervention.getLesInterventions(cnx).size());
+        
+        System.out.println ("L'intervention 1 s'est efectue a =" + DaoIntervention.getInterventionById(cnx,1).getLieu());
+        
+        Intervention i = new Intervention();
+        i.setLieu("Saint-Lô");
+        i.setDuree(40);
+        
 
        
         

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package database;
 
 import java.sql.Connection;
@@ -11,118 +7,137 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import model.Caserne;
 import model.Pompier;
+import model.Surgrade;
 
-/**
- *
- * @author zakina
- */
 public class DaoPompier {
-    
-    Connection cnx;
+
     static PreparedStatement requeteSql = null;
     static ResultSet resultatRequete = null;
-    
-    public static ArrayList<Pompier> getLesPompiers(Connection cnx){
-        
-        ArrayList<Pompier> lesPompiers = new ArrayList<Pompier>();
-        try{
-            requeteSql = cnx.prepareStatement("select pompier.id as p_id, pompier.nom as p_nom, pompier.prenom as p_prenom, c.id as c_id, c.nom as c_nom " +
-                         " from pompier inner join caserne c " +
-                         " on pompier.caserne_id = c.id ");
+
+    public static ArrayList<Pompier> getLesPompiers(Connection cnx) {
+        ArrayList<Pompier> lesPompiers = new ArrayList<>();
+
+        try {
+            requeteSql = cnx.prepareStatement(
+                "SELECT pompier.id AS p_id, pompier.nom AS p_nom, pompier.prenom AS p_prenom, " +
+                "c.id AS c_id, c.nom AS c_nom, " +
+                "s.id AS s_id, s.libelle AS s_libelle " +
+                "FROM pompier " +
+                "INNER JOIN caserne c ON pompier.caserne_id = c.id " +
+                "LEFT JOIN surgrade s ON pompier.surgrade_id = s.id"
+            );
+
             resultatRequete = requeteSql.executeQuery();
-            
-            while (resultatRequete.next()){
-                
+
+            while (resultatRequete.next()) {
                 Pompier p = new Pompier();
-                    p.setId(resultatRequete.getInt("p_id"));
-                    p.setNom(resultatRequete.getString("p_nom"));
-                    p.setPrenom(resultatRequete.getString("p_prenom"));
+                p.setId(resultatRequete.getInt("p_id"));
+                p.setNom(resultatRequete.getString("p_nom"));
+                p.setPrenom(resultatRequete.getString("p_prenom"));
+
                 Caserne c = new Caserne();
-                    c.setId(resultatRequete.getInt("c_id"));
-                    c.setNom(resultatRequete.getString("c_nom"));
-                
+                c.setId(resultatRequete.getInt("c_id"));
+                c.setNom(resultatRequete.getString("c_nom"));
                 p.setUneCaserne(c);
-                
+
+                if (resultatRequete.getInt("s_id") != 0) {
+                    Surgrade s = new Surgrade();
+                    s.setId(resultatRequete.getInt("s_id"));
+                    s.setLibelle(resultatRequete.getString("s_libelle"));
+                    p.setUnSurgrade(s);
+                }
+
                 lesPompiers.add(p);
             }
-           
-        }
-        catch (SQLException e){
+
+        } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("La requête de getLesPompiers e généré une erreur");
         }
+
         return lesPompiers;
     }
-    
+
     public static Pompier getPompierById(Connection cnx, int idPompier){
-        
-        Pompier p = null ;
-        try{
-            requeteSql = cnx.prepareStatement("select pompier.id as p_id, pompier.nom as p_nom, pompier.prenom as p_prenom, c.id as c_id, c.nom as c_nom " +
-                         " from pompier inner join caserne c " +
-                         " on pompier.caserne_id = c.id "+
-                         " where pompier.id= ? ");
-            requeteSql.setInt(1, idPompier);
-            resultatRequete = requeteSql.executeQuery();
-            
-            if (resultatRequete.next()){
-                
-                    p = new Pompier();
-                    p.setId(resultatRequete.getInt("p_id"));
-                    p.setNom(resultatRequete.getString("p_nom"));
-                    p.setPrenom(resultatRequete.getString("p_prenom"));
-                Caserne c = new Caserne();
-                    c.setId(resultatRequete.getInt("c_id"));
-                    c.setNom(resultatRequete.getString("c_nom"));
-                
-                p.setUneCaserne(c);
-                
-                
-            }
-           
+    Pompier p = null ;
+    try{
+        requeteSql = cnx.prepareStatement("SELECT pompier.id AS p_id, pompier.nom AS p_nom, pompier.prenom AS p_prenom, " +
+                                         "c.id AS c_id, c.nom AS c_nom, " +
+                                         "s.id AS s_id, s.libelle AS s_libelle " +
+                                         "FROM pompier " +
+                                         "INNER JOIN caserne c ON pompier.caserne_id = c.id " +
+                                         "LEFT JOIN surgrade s ON pompier.surgrade_id = s.id " +
+                                         "WHERE pompier.id = ?");
+        requeteSql.setInt(1, idPompier);
+        resultatRequete = requeteSql.executeQuery();
+
+        if (resultatRequete.next()){
+            p = new Pompier();
+            p.setId(resultatRequete.getInt("p_id"));
+            p.setNom(resultatRequete.getString("p_nom"));
+            p.setPrenom(resultatRequete.getString("p_prenom"));
+
+            // Récupérer les informations de la caserne
+            Caserne c = new Caserne();
+            c.setId(resultatRequete.getInt("c_id"));
+            c.setNom(resultatRequete.getString("c_nom"));
+            p.setUneCaserne(c);
+
+            // Récupérer les informations du surgrade (grade)
+            Surgrade s = new Surgrade();
+            s.setId(resultatRequete.getInt("s_id"));
+            s.setLibelle(resultatRequete.getString("s_libelle"));
+            p.setUnSurgrade(s); // Ajouter le surgrade à l'objet Pompier
         }
-        catch (SQLException e){
-            e.printStackTrace();
-            System.out.println("La requête de getPompierById  a généré une erreur");
-        }
-        return p ;
+
+    } catch (SQLException e){
+        e.printStackTrace();
+        System.out.println("La requête de getPompierById a généré une erreur");
     }
-    
-    
-    public static Pompier addPompier(Connection connection, Pompier p){      
+    return p;
+
+
+    }
+
+    public static Pompier addPompier(Connection connection, Pompier p) {
         int idGenere = -1;
-        try
-        {
-            //preparation de la requete
-            // id (clé primaire de la table client) est en auto_increment,donc on ne renseigne pas cette valeur
-            // la paramètre RETURN_GENERATED_KEYS est ajouté à la requête afin de pouvoir récupérer l'id généré par la bdd (voir ci-dessous)
-            // supprimer ce paramètre en cas de requête sans auto_increment.
-            requeteSql=connection.prepareStatement("INSERT INTO pompier ( nom, prenom, caserne_id)\n" +
-                    "VALUES (?,?,?)", requeteSql.RETURN_GENERATED_KEYS );
+
+        try {
+            requeteSql = connection.prepareStatement(
+                "INSERT INTO pompier (nom, prenom, caserne_id, surgrade_id) VALUES (?, ?, ?, ?)",
+                PreparedStatement.RETURN_GENERATED_KEYS
+            );
+
             requeteSql.setString(1, p.getNom());
             requeteSql.setString(2, p.getPrenom());
             requeteSql.setInt(3, p.getUneCaserne().getId());
+            requeteSql.setInt(4, p.getUnSurgrade() != null ? p.getUnSurgrade().getId() : null);
 
-           /* Exécution de la requête */
             requeteSql.executeUpdate();
-            
-             // Récupération de id auto-généré par la bdd dans la table client
+
             resultatRequete = requeteSql.getGeneratedKeys();
-            while ( resultatRequete.next() ) {
-                idGenere = resultatRequete.getInt( 1 );
+            if (resultatRequete.next()) {
+                idGenere = resultatRequete.getInt(1);
                 p.setId(idGenere);
-                
-                p = DaoPompier.getPompierById(connection, p.getId());
+                p = getPompierById(connection, idGenere);
             }
-            
-         
-        }   
-        catch (SQLException e) 
-        {
+
+        } catch (SQLException e) {
             e.printStackTrace();
-            //out.println("Erreur lors de l’établissement de la connexion");
         }
-        return p ;    
+
+        return p;
     }
-    
+
+    public static void associerSurgrade(Connection cnx, int idPompier, int idSurgrade) {
+        try {
+            requeteSql = cnx.prepareStatement(
+                "UPDATE pompier SET surgrade_id = ? WHERE id = ?"
+            );
+            requeteSql.setInt(1, idSurgrade);
+            requeteSql.setInt(2, idPompier);
+            requeteSql.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

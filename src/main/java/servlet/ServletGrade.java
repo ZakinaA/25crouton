@@ -66,9 +66,10 @@ public class ServletGrade extends HttpServlet {
             for (Surgrade s : surgrades) {
                 out.println("<tr>");
                 out.println("<td>" + s.getId() + "</td>");
-                out.println("<td><a href='ServletGrade?idGrade=" + s.getId() + "'>" + s.getLibelle() + "</a></td>");
+                out.println("<td><a href='?idGrade=" + s.getId() + "'>" + s.getLibelle() + "</a></td>");
                 out.println("<td>" + s.getGrade_id() + "</td>");
-                out.println("<td><a href='ServletGrade?action=modifier&idGrade=" + s.getId() + "'>Modifier</a></td>");
+                out.println("<td><a href='?action=modifier&idGrade=" + s.getId() + "'>Modifier</a></td>");
+                out.println("<td><a href='?action=ajouter&idGrade=" + s.getId() + "'>Ajouter</a></td>");
                 out.println("</tr>");
             }
 

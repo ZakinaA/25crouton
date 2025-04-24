@@ -1,64 +1,43 @@
-<%-- 
-    Document   : lister_pompiers.jsp
-    Created on : 15 mars 2024, 16:50:49
-    Author     : zakina
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="model.Pompier"%>
-<%@page import="model.Caserne"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="model.Pompier"%>
+<%@page import="model.Surgrade"%>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>SDIS WEB</title>
-    </head>
-    <body>
-        <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>APPLICATION DE GESTION SDIS CALVADOS</title>
-    </head>
-    <body>
-        <h1>Liste des pompiers du Calvados</h1>
-            <%
-                ArrayList<Pompier> lesPompiers = (ArrayList)request.getAttribute("pLesPompiers");
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des Pompiers du Calvados</title>
+</head>
+<body>
+    <h1>Liste des pompiers du Calvados</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>nom</th>
+                <th>prénom</th>
+                <th>caserne</th>
+                <th>grade</th> <!-- Colonne pour afficher le grade -->
+            </tr>
+        </thead>
+        <tbody>
+            <% 
+                // Récupération de la liste des pompiers
+                ArrayList<Pompier> lesPompiers = (ArrayList<Pompier>) request.getAttribute("pLesPompiers");
+                for (Pompier p : lesPompiers) {
             %>
-            <table>  
-            <thead>
-                <tr>             
-                    <th>id</th>
-                    <th>nom</th>
-                    <th>prenom</th>
-                    <th>caserne</th>                
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <%
-                        for (Pompier p : lesPompiers)
-                        {              
-                            out.println("<tr><td>");
-                            out.println(p.getId());
-                            out.println("</a></td>");
-
-                            out.println("<td><a href ='../ServletPompier/consulter?idPompier="+ p.getId()+ "'>");
-                            out.println(p.getNom());
-                            out.println("</td>");;
-
-                            out.println("<td>");
-                            out.println(p.getPrenom());
-                            out.println("</td>");
-                           
-                            out.println("<td>");
-                            out.println(p.getUneCaserne().getNom());
-                            out.println("</td>");
-                               
-                        }
-                    %>
-                </tr>
-            </tbody>
-        </table>
-    </body>
-    </body>
+            <tr>
+                <td><%= p.getId() %></td>
+                <td><%= p.getNom() %></td>
+                <td><%= p.getPrenom() %></td>
+                <td><%= p.getUneCaserne().getNom() %></td>
+                <td><%= p.getUnSurgrade() != null ? p.getUnSurgrade().getLibelle() : "Aucun" %></td> <!-- Affiche le grade -->
+            </tr>
+            <% 
+                }
+            %>
+        </tbody>
+    </table>
+</body>
 </html>

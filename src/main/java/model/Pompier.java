@@ -15,6 +15,7 @@ public class Pompier {
     private String nom;
     private String prenom ;
     private Caserne uneCaserne ;
+    private Surgrade unSurgrade;
 
     public Pompier() {
     }
@@ -57,6 +58,14 @@ public class Pompier {
 
     public void setUneCaserne(Caserne uneCaserne) {
         this.uneCaserne = uneCaserne;
+    }
+    
+    public void setUnSurgrade(Surgrade s) {
+        this.unSurgrade = s;
+    }
+
+    public Surgrade getUnSurgrade() {
+        return this.unSurgrade;
     }
     
     

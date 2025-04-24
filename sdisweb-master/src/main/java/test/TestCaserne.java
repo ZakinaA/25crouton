@@ -3,31 +3,26 @@ package test;
 import model.Caserne;
 import model.Engin;
 import model.TypeEngin;
-import java.util.ArrayList;
 
 public class TestCaserne {
+
     public static void main(String[] args) {
-        Caserne caserne1 = new Caserne(1, "Caserne Centrale");
 
-        TypeEngin typeCamion = new TypeEngin(1, "Camion Pompier", 2);
-        TypeEngin typeEchelle = new TypeEngin(2, "Camion Échelle", 1);
+        Caserne caserne1 = new Caserne(1, "Centre Ville");
+        System.out.println("Caserne créée : ID = " + caserne1.getId() + ", Nom = " + caserne1.getNom());
 
-        Engin engin1 = new Engin(101, typeCamion, caserne1);
-        Engin engin2 = new Engin(102, typeEchelle, caserne1);
+  
+        TypeEngin typeCamion = new TypeEngin(1, "Camion Citerne", 1);
+        Engin engin1 = new Engin(1, typeCamion);
 
-        caserne1.addEngin(engin1);
-        caserne1.addEngin(engin2);
-        System.out.println("Caserne: " + caserne1.getNom());
-
-        ArrayList<Engin> engins = caserne1.getLesEngins();
-
-        if (engins.isEmpty()) {
-            System.out.println("Aucun engin dans cette caserne.");
+        // Assignation d'un engin à la caserne
+        caserne1.setEngin(engin1);
+        if (caserne1.getEngin() != null) {
+            System.out.println("Engin affecté à la caserne : ID = " + caserne1.getEngin().getId() + ", Type = " + caserne1.getEngin().getType().getLibelle());
         } else {
-            System.out.println("Liste des engins :");
-            for (Engin e : engins) {
-                System.out.println("  Engin ID: " + e.getId() + ", Type: " + e.getType().getLibelle());
-            }
+            System.out.println("Aucun engin affecté à la caserne.");
         }
+
+     
     }
 }

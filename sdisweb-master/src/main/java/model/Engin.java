@@ -1,26 +1,31 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Engin {
 
     private int id;
     private TypeEngin type;
-    private Caserne caserne; // Ajout de la relation avec Caserne
+    private List<Caserne> casernes; 
 
     public Engin() {}
 
     public Engin(int id) {
         this.id = id;
+        this.casernes = new ArrayList<>(); 
     }
 
     public Engin(int id, TypeEngin type) {
         this.id = id;
         this.type = type;
+        this.casernes = new ArrayList<>(); 
     }
 
-    public Engin(int id, TypeEngin type, Caserne caserne) {
+    public Engin(int id, TypeEngin type, List<Caserne> casernes) {
         this.id = id;
         this.type = type;
-        this.caserne = caserne;
+        this.casernes = (casernes != null) ? casernes : new ArrayList<>(); 
     }
 
     public int getId() {
@@ -39,11 +44,13 @@ public class Engin {
         this.type = type;
     }
 
-    public Caserne getCaserne() {
-        return caserne;
+    public List<Caserne> getCasernes() {
+        return casernes;
     }
 
-    public void setCaserne(Caserne caserne) {
-        this.caserne = caserne;
+    public void setCasernes(List<Caserne> casernes) {
+        this.casernes = (casernes != null) ? casernes : new ArrayList<>();
     }
+
+
 }

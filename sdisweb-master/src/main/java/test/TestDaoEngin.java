@@ -13,17 +13,17 @@ public class TestDaoEngin {
         
         if (connection != null) {
             try {
-                DaoEngin daoEngin = new DaoEngin(connection);  // Passage de la connexion à DaoEngin
+                DaoEngin daoEngin = new DaoEngin(connection); 
 
-                // Test de récupération de tous les engins
+                
                 System.out.println("Test de récupération de tous les engins :");
                 List<Engin> engins = daoEngin.getLesEngins();
                 for (Engin engin : engins) {
                     System.out.println("ID: " + engin.getId() + ", Type: " + engin.getType().getLibelle());
                 }
 
-                // Test de récupération d'un engin par ID
-                int testId = 1; // Remplacez par un ID valide de votre base
+               
+                int testId = 1; 
                 System.out.println("\nTest de récupération d'un engin par ID: " + testId);
                 Engin engin = daoEngin.getEnginById(testId);
                 if (engin != null) {
@@ -34,7 +34,7 @@ public class TestDaoEngin {
             } catch (SQLException e) {
                 e.printStackTrace();
             } finally {
-                ConnexionBdd.fermerConnexion(connection);  // Fermeture de la connexion après l'utilisation
+                ConnexionBdd.fermerConnexion(connection);  
             }
         } else {
             System.out.println("Échec de la connexion à la base de données.");

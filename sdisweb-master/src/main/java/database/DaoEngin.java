@@ -1,5 +1,6 @@
 package database;
 
+import model.Caserne;
 import model.Engin;
 import model.TypeEngin;
 import java.sql.Connection;
@@ -13,7 +14,6 @@ public class DaoEngin {
 
     private Connection connection;
 
-    // Constructeur qui prend la connexion comme paramètre
     public DaoEngin(Connection connection) {
         this.connection = connection;
     }
@@ -26,8 +26,11 @@ public class DaoEngin {
             return engins;
         }
 
-        String sql = "SELECT e.id as enginId, e.type_id as type_id, t.libelle as libelle, t.numero_ordre as numero_ordre " +
-                     "FROM engin e INNER JOIN type_engin t ON e.type_id = t.id";
+        String sql = "SELECT e.id as enginId, e.type_id as type_id, t.libelle as typeLibelle, t.numero_ordre as typeNumeroOrdre, " +
+                     "c.id as caserneId, c.nom as caserneNom " +
+                     "FROM engin e " +
+                     "INNER JOIN type_engin t ON e.type_id = t.id " +
+                     "LEFT JOIN caserne c ON e.caserne_id = c.id";
 
         try (PreparedStatement pstmt = connection.prepareStatement(sql);
              ResultSet rs = pstmt.executeQuery()) {
@@ -35,10 +38,21 @@ public class DaoEngin {
             while (rs.next()) {
                 int enginId = rs.getInt("enginId");
                 int typeId = rs.getInt("type_id");
-                String typeLibelle = rs.getString("libelle");
-                int typeNumeroOrdre = rs.getInt("numero_ordre");
+                String typeLibelle = rs.getString("typeLibelle");
+                int typeNumeroOrdre = rs.getInt("typeNumeroOrdre");
                 TypeEngin typeEngin = new TypeEngin(typeId, typeLibelle, typeNumeroOrdre);
+
+                int caserneId = rs.getInt("caserneId");
+                String caserneNom = rs.getString("caserneNom");
+                Caserne caserne = null;
+                if (caserneId != 0) {
+                    caserne = new Caserne(caserneId, caserneNom);
+                }
+
                 Engin engin = new Engin(enginId, typeEngin);
+                if (caserne != null) {
+                    engin.setCasernes(List.of(caserne)); // Utiliser setCasernes avec une liste immutable
+                }
                 engins.add(engin);
             }
 
@@ -57,8 +71,12 @@ public class DaoEngin {
             return null;
         }
 
-        String sql = "SELECT e.id as enginId, e.type_id as type_id, t.libelle as libelle, t.numero_ordre as numero_ordre " +
-                     "FROM engin e INNER JOIN type_engin t ON e.type_id = t.id WHERE e.id = ?";
+        String sql = "SELECT e.id as enginId, e.type_id as type_id, t.libelle as typeLibelle, t.numero_ordre as typeNumeroOrdre, " +
+                     "c.id as caserneId, c.nom as caserneNom " +
+                     "FROM engin e " +
+                     "INNER JOIN type_engin t ON e.type_id = t.id " +
+                     "LEFT JOIN caserne c ON e.caserne_id = c.id " +
+                     "WHERE e.id = ?";
 
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, id);
@@ -66,10 +84,21 @@ public class DaoEngin {
                 if (rs.next()) {
                     int enginId = rs.getInt("enginId");
                     int typeId = rs.getInt("type_id");
-                    String typeLibelle = rs.getString("libelle");
-                    int typeNumeroOrdre = rs.getInt("numero_ordre");
+                    String typeLibelle = rs.getString("typeLibelle");
+                    int typeNumeroOrdre = rs.getInt("typeNumeroOrdre");
                     TypeEngin typeEngin = new TypeEngin(typeId, typeLibelle, typeNumeroOrdre);
+
+                    int caserneId = rs.getInt("caserneId");
+                    String caserneNom = rs.getString("caserneNom");
+                    Caserne caserne = null;
+                    if (caserneId != 0) {
+                        caserne = new Caserne(caserneId, caserneNom);
+                    }
+
                     engin = new Engin(enginId, typeEngin);
+                    if (caserne != null) {
+                        engin.setCasernes(List.of(caserne)); // Utiliser setCasernes avec une liste immutable
+                    }
                 }
             }
         } catch (SQLException e) {
@@ -78,4 +107,18 @@ public class DaoEngin {
         }
         return engin;
     }
-}
+    public int ajouterEngin(Connection cnx, Engin engin) throws SQLException {
+        String sql = "INSERT INTO engin (type_id, caserne_id) VALUES (?, ?)";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setInt(1, engin.getType().getId());
+            if (engin.getCasernes() != null && !engin.getCasernes().isEmpty()) {
+                pstmt.setInt(2, engin.getCasernes().get(0).getId());
+            } else {
+                pstmt.setNull(2, java.sql.Types.INTEGER); 
+            }
+            return pstmt.executeUpdate(); 
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de l'ajout de l'engin : " + e.getMessage());
+            throw e;
+        }}}
+    

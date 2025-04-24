@@ -9,33 +9,37 @@
     </head>
     <body>
         <h1>Liste des engins du Calvados</h1>
-        
-        <!-- Récupération de la liste des engins depuis la requête -->
+
         <%
             ArrayList<Engin> lesEngins = (ArrayList) request.getAttribute("pLesEngins");
         %>
 
-        <!-- Table pour afficher la liste des engins -->
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>ID de l'Engin</th>
-                    <th>Type de l'Engin</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% 
-                  
-                    for (Engin engin : lesEngins) {
-                %>
+        <% if (lesEngins != null && !lesEngins.isEmpty()) { %>
+            <table border="1">
+                <thead>
                     <tr>
-                        <td><%= engin.getId() %></td>
-                        <td><%= engin.getType().getLibelle() %></td>
+                        <th>ID de l'Engin</th>
+                        <th>Type de l'Engin</th>
+              
                     </tr>
-                <% 
-                    }
-                %>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                  <a href="<%= request.getContextPath() %>/ServletEngin/ajouter">Ajouter un nouvel engin</a>
+                    <%
+                        for (Engin engin : lesEngins) {
+                    %>
+                        <tr>
+                            <td><%= engin.getId() %></td>
+                            <td><a href="../ServletEngin/consulterEngin?idEngin=<%= engin.getId() %>"><%= engin.getType().getLibelle() %></td>
+                        
+                        </tr>
+                    <%
+                        }
+                    %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <p>Aucun engin n'a été trouvé.</p>
+        <% } %>
     </body>
 </html>

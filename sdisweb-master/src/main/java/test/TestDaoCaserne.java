@@ -1,25 +1,28 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package test;
 
 import database.ConnexionBdd;
 import database.DaoCaserne;
-import database.DaoPompier;
 import java.sql.Connection;
+import java.util.ArrayList;
+import model.Caserne;
 
-/**
- *
- * @author zakina
- */
 public class TestDaoCaserne {
-    
-      public static void main (String args[]){
-        
+
+    public static void main(String args[]) {
+
         Connection cnx = ConnexionBdd.ouvrirConnexion();
-        System.out.println ("nombre de casernes=" + DaoCaserne.getLesCasernes(cnx).size());
-           
+
+        ArrayList<Caserne> lesCasernes = DaoCaserne.getLesCasernes(cnx);
+
+        if (lesCasernes != null && !lesCasernes.isEmpty()) {
+            for (Caserne caserne : lesCasernes) {
+                System.out.println("Nom de la caserne : " + caserne.getNom());
+            }
+            System.out.println("Nombre total de casernes : " + lesCasernes.size());
+        } else {
+            System.out.println("Aucune caserne trouvée.");
+        }
+
+        ConnexionBdd.fermerConnexion(cnx);
     }
-    
 }

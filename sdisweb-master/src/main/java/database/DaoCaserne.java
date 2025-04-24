@@ -13,32 +13,33 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import model.Caserne;
 
-/**
- *
- * @author zakina
- */
+
 public class DaoCaserne {
-    
+
     Connection cnx;
     static PreparedStatement requeteSql = null;
     static ResultSet resultatRequete = null;
-    
+
+    public DaoCaserne(Connection connection) {
+        this.cnx = connection;
+    }
+
     public static ArrayList<Caserne> getLesCasernes(Connection cnx){
-        
+
         ArrayList<Caserne> lesCasernes= new ArrayList<Caserne>();
         try{
             requeteSql = cnx.prepareStatement("select * from caserne");
             resultatRequete = requeteSql.executeQuery();
-            
+
             while (resultatRequete.next()){
-                
+
                 Caserne c = new Caserne();
                     c.setId(resultatRequete.getInt("id"));
                     c.setNom(resultatRequete.getString("nom"));
 
                 lesCasernes.add(c);
             }
-           
+
         }
         catch (SQLException e){
             e.printStackTrace();
@@ -46,5 +47,5 @@ public class DaoCaserne {
         }
         return lesCasernes;
     }
-    
+
 }

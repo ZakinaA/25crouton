@@ -11,6 +11,7 @@ model\Caserne.class
 database\InitConnexion.class
 test\TestDaoPompier.class
 bts\sio\sdisweb\resources\JakartaEE10Resource.class
+form\FormEngin.class
 database\DaoTypeEngin.class
 test\TestDaoCaserne.class
 database\DaoPompier.class

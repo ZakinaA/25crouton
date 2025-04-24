@@ -11,13 +11,11 @@ import java.util.ArrayList;
  * @author zakina
  */
 public class Caserne {
-    
-    private int id;
-    private String nom ;
-    private ArrayList<Pompier> lesPompiers ;
-    private ArrayList<Engin> lesEngins; 
 
-    
+    private int id;
+    private String nom;
+    private ArrayList<Pompier> lesPompiers;
+    private Engin engin; 
 
     public Caserne() {
     }
@@ -26,14 +24,13 @@ public class Caserne {
         this.id = id;
     }
 
-     
+
     public Caserne(int id, String nom) {
         this.id = id;
         this.nom = nom;
         this.lesPompiers = new ArrayList<>();
-        this.lesEngins = new ArrayList<>();
     }
-    
+
     public int getId() {
         return id;
     }
@@ -57,27 +54,21 @@ public class Caserne {
     public void setLesPompiers(ArrayList<Pompier> lesPompiers) {
         this.lesPompiers = lesPompiers;
     }
-    
+
     public void addPompier(Pompier p){
         if (lesPompiers == null){
             lesPompiers = new ArrayList<Pompier>();
         }
         lesPompiers.add(p);
     }
+
+    public Engin getEngin() {
+        return engin;
+    }
+
+    public void setEngin(Engin engin) {
+        this.engin = engin;
+    }
+
     
-    public ArrayList<Engin> getLesEngins() {
-    return lesEngins;
-}
-
-     public void setLesEngins(ArrayList<Engin> lesEngins) {
-        this.lesEngins = lesEngins;
-    }
-    public void addEngin(Engin e) {
-    if (lesEngins == null) {
-        lesEngins = new ArrayList<>();
-    }
-    lesEngins.add(e);
-    e.setCaserne(this);
-}
-
 }
